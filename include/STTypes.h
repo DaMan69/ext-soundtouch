@@ -138,7 +138,7 @@ namespace soundtouch
 
         #ifdef SOUNDTOUCH_ALLOW_X86_OPTIMIZATIONS
             // Allow MMX optimizations (not available in X64 mode)
-            #if (!_M_X64)
+            #if defined(__GNUC__) || defined(__clang__) || defined(__INTEL_COMPILER) || defined(_M_IX86)
                 #define SOUNDTOUCH_ALLOW_MMX   1
             #endif
         #endif
@@ -160,7 +160,7 @@ namespace soundtouch
 };
 
 // define ST_NO_EXCEPTION_HANDLING switch to disable throwing std exceptions:
-// #define ST_NO_EXCEPTION_HANDLING    1
+#define ST_NO_EXCEPTION_HANDLING    1
 #ifdef ST_NO_EXCEPTION_HANDLING
     // Exceptions disabled. Throw asserts instead if enabled.
     #include <assert.h>
